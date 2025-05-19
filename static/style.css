@@ -1,0 +1,118 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f0f2f5;
+    color: #333;
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* Align to top */
+    min-height: 100vh;
+}
+
+.container {
+    background-color: #ffffff;
+    padding: 20px 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    width: 100%;
+    max-width: 800px;
+}
+
+h1 {
+    color: #2c3e50;
+    text-align: center;
+    margin-bottom: 10px;
+}
+h1 .highlight {
+    color: #e67e22; /* Orange highlight */
+}
+
+.disclaimer {
+    font-size: 0.9em;
+    color: #7f8c8d;
+    text-align: center;
+    margin-bottom: 20px;
+    font-style: italic;
+}
+
+.price-card, .prediction-card {
+    background-color: #ecf0f1;
+    border: 1px solid #bdc3c7;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.price-card h2, .prediction-card h2 {
+    margin-top: 0;
+    color: #34495e;
+    border-bottom: 1px solid #bdc3c7;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+}
+
+#current-price {
+    font-size: 2em;
+    font-weight: bold;
+    color: #2980b9;
+    text-align: center;
+}
+
+.timestamp {
+    font-size: 0.8em;
+    color: #7f8c8d;
+    text-align: right;
+}
+
+.prediction-card.buy {
+    border-left: 5px solid #2ecc71; /* Green */
+}
+.prediction-card.buy h2 { color: #27ae60; }
+
+.prediction-card.sell {
+    border-left: 5px solid #e74c3c; /* Red */
+}
+.prediction-card.sell h2 { color: #c0392b; }
+
+.prediction-card.hold {
+    border-left: 5px solid #f39c12; /* Orange */
+}
+.prediction-card.hold h2 { color: #d35400; }
+
+.prediction-card.future {
+    border-left: 5px solid #3498db; /* Blue */
+}
+.prediction-card.future h2 { color: #2980b9; }
+
+
+.thirty-day-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+}
+.thirty-day-table th, .thirty-day-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+.thirty-day-table th {
+    background-color: #eef;
+    color: #34495e;
+}
+.thirty-day-table tr.buy td { background-color: #e6ffe6; } /* Light green */
+.thirty-day-table tr.sell td { background-color: #ffe6e6; } /* Light red */
+.thirty-day-table tr.hold td { background-color: #fff5e6; } /* Light orange */
+
+@media (max-width: 600px) {
+    .container {
+        padding: 15px;
+    }
+    h1 {
+        font-size: 1.5em;
+    }
+    #current-price {
+        font-size: 1.8em;
+    }
+}
