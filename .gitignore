@@ -1,0 +1,40 @@
+# Python virtual environment
+venv/
+.venv/
+env/
+ENV/
+
+# Python bytecode and cache
+*.pyc
+__pycache__/
+*.cpython-*.pyc
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# IDE / Editor specific files
+.vscode/
+.idea/
+
+# Data files (if you don't want to track them directly)
+# Consider if you really want to commit these.
+# If they are large or change often, you probably shouldn't.
+*.csv
+*.data
+# xrp_daily_data.csv # Be more specific if you have other CSVs you DO want to track
+
+# Model files (if you don't want to track them directly)
+*.joblib
+# xrp_predictor_model.joblib
+
+# Local configuration files (if any, that shouldn't be shared)
+# .env
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# Compiled files/build artifacts (if any)
+build/
+dist/
+*.egg-info/

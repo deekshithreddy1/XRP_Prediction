@@ -3,94 +3,75 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>XRP Future Predictor ✨</title>
+    <title>XRP Prediction Pro</title>
     <link
       rel="stylesheet"
       href="{{ url_for('static', filename='style.css') }}"
     />
+    <script>
+      async function refreshData() {
+        const statusElement = document.getElementById("refresh-status");
+        statusElement.textContent =
+          "Refreshing data and predictions... This may take a moment.";
+        statusElement.style.color = "orange";
+        try {
+          const response = await fetch("/api/force_refresh", {
+            method: "POST",
+          });
+          const result = await response.json();
+          if (result.status === "success") {
+            statusElement.textContent = "Refresh successful! Page will reload.";
+            statusElement.style.color = "green";
+            setTimeout(() => window.location.reload(), 1500);
+          } else {
+            statusElement.textContent = `Refresh failed: ${
+              result.message || "Unknown error"
+            }`;
+            statusElement.style.color = "red";
+          }
+        } catch (error) {
+          statusElement.textContent = `Refresh error: ${error}`;
+          statusElement.style.color = "red";
+        }
+      }
+    </script>
   </head>
   <body>
     <div class="container">
-      <h1>XRP Future Predictor ✨ (100% Accurate!)</h1>
+      <h1>XRP Prediction Pro</h1>
       <p class="disclaimer">
-        Hi Future Crypto Millionaire! Remember, this is a super special
-        predictor. In the real world, things are tricky, but here, we know the
-        future! 😉
+        <strong>Disclaimer:</strong> This tool is for educational and
+        experimental purposes only. Cryptocurrency investments are highly
+        volatile and risky. Do not base financial decisions solely on these
+        predictions. Past performance is not indicative of future results. The
+        model's accuracy is not guaranteed.
       </p>
 
-      <div class="price-card">
-        <h2>Current XRP Price</h2>
-        <p id="current-price">
-          {% if data.current_price_usd %} ${{
-          "%.4f"|format(data.current_price_usd) }} {% else %} Fetching... {%
-          endif %}
+      <div class="prediction-card">
+        <h2>XRP Outlook (for next trading period)</h2>
+        <p>Based on data up to: <strong>{{ data.last_data_date }}</strong></p>
+        <p>Last Close Price: <strong>{{ data.current_price }} USD</strong></p>
+        <hr />
+        <p
+          class="signal-{{ data.signal.lower().replace('/', '') if data.signal else 'na' }}"
+        >
+          Predicted Signal: <strong>{{ data.signal }}</strong>
         </p>
-        <p class="timestamp">
-          Last updated: {{ data.last_updated if data.last_updated else 'Never'
-          }}
-        </p>
+        <p class="reason"><em>{{ data.reason }}</em></p>
       </div>
 
-      <div
-        class="prediction-card today {% if data.today_prediction.action == 'BUY' or data.today_prediction.action == 'STRONG BUY' %}buy{% elif data.today_prediction.action == 'SELL' or data.today_prediction.action == 'STRONG SELL' %}sell{% else %}hold{% endif %}"
-      >
-        <h2>
-          Today's Prediction (for {{ (data.last_updated.split(' ')[0] if
-          data.last_updated else 'Today') }}) {{ data.today_prediction.emoji }}
-        </h2>
-        <p><strong>Action:</strong> {{ data.today_prediction.action }}</p>
-        <p><strong>Why:</strong> {{ data.today_prediction.reason }}</p>
+      <div class="info-card">
+        <h3>System Information</h3>
+        <p>Model Status: {{ data.model_status }}</p>
+        <p>Last Model Update/Load: {{ data.last_model_train_time }}</p>
+        <p>Data Source: <code class="filepath">{{ csv_path }}</code></p>
+        <button onclick="refreshData()">Force Refresh Data & Prediction</button>
+        <p id="refresh-status" style="margin-top: 10px"></p>
       </div>
 
-      <div class="prediction-card future">
-        <h2>Next 7 Days Outlook {{ data.next_7_days.emoji }}</h2>
-        <p><strong>Trend:</strong> {{ data.next_7_days.trend }}</p>
-        <p>
-          <strong>Target Price by end of week:</strong> {{
-          data.next_7_days.target_price }}
-        </p>
-      </div>
-
-      <div class="prediction-card future">
-        <h2>Next 30 Days Detailed Outlook 🗺️</h2>
-        <p>{{ data.next_30_days_outlook }}</p>
-        {% if data.next_30_days_daily %}
-        <table class="thirty-day-table">
-          <thead>
-            <tr>
-              <th>Day</th>
-              <th>Predicted Movement</th>
-              <th>Tip</th>
-            </tr>
-          </thead>
-          <tbody>
-            {% for day_pred in data.next_30_days_daily %}
-            <tr
-              class="{% if 'UP' in day_pred.movement %}buy{% elif 'DOWN' in day_pred.movement %}sell{% else %}hold{% endif %}"
-            >
-              <td>{{ loop.index }}</td>
-              <td>{{ day_pred.movement }} {{ day_pred.emoji }}</td>
-              <td>{{ day_pred.tip }}</td>
-            </tr>
-            {% endfor %}
-          </tbody>
-        </table>
-        {% endif %}
-      </div>
-
-      <div class="prediction-card future">
-        <h2>Next Year Prediction {{ data.next_year.emoji }}</h2>
-        <p><strong>Outlook:</strong> {{ data.next_year.outlook }}</p>
-        <p>
-          <strong>Potential Price:</strong> {{ data.next_year.potential_price }}
-        </p>
-      </div>
+      <footer>
+        <p>XRP Prediction Pro - Use Responsibly</p>
+      </footer>
     </div>
-    <script>
-      // Optional: Auto-refresh the page every 5 minutes for "live" feel
-      setTimeout(function () {
-        window.location.reload(1);
-      }, 300000);
-    </script>
   </body>
 </html>

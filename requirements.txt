@@ -1,4 +1,7 @@
 Flask
 requests
-APScheduler
 pandas
+numpy
+scikit-learn
+ta
+python-dotenv # For API keys, optional but good practice
